@@ -35,6 +35,7 @@ RUN \
     smokeping==${SMOKEPING_VERSION} \
     ssmtp \
     sudo \
+    fping \
     tcptraceroute && \
   echo "**** Build perl TacacsPlus module ****" && \
   cpanm Authen::TacacsPlus && \
@@ -52,6 +53,10 @@ RUN \
   rm -rf \
     /tmp/* \
     /etc/apache2/httpd.conf
+
+# Adding fping6 to the container for Librenms
+RUN echo "/usr/sbin/fping -6 \$@" > /usr/sbin/fping6 \
+&& chmod +x /usr/sbin/fping6
 
 # add local files
 COPY root/ /
